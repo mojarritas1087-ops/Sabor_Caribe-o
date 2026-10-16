@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sabor Caribeño · Sobre el proyecto</title>
+<meta name="description" content="Sabor Caribeño conecta a quienes están en Santa Marta con chefs certificados de la costa Caribe colombiana que cocinan en vivo en tu casa.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/proyecto.css">
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><img src="assets/logo-icono.svg" alt="" width="40" height="40">Sabor Caribeño</a>
+  <div class="links"><a href="#problema">Problema</a><a href="#solucion">Solución</a><a href="#mvp">MVP</a><a href="#confianza">Confianza</a><a href="#preguntas">Preguntas</a><a class="btn sm" href="app.html">Probar la app</a></div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div class="tag">Proyecto universitario · Universidad Sergio Arboleda</div>
+  <img class="ic" src="assets/logo-icono.svg" alt="Logo de Sabor Caribeño">
+  <h1>Sabor Caribeño</h1>
+  <p style="font:700 24px var(--serif);color:var(--petal)">Cocina caribeña auténtica, en tu casa.</p>
+  <p>Plataforma web que conecta a personas interesadas en la cultura caribeña con chefs caribeños verificados, que llegan al hogar del usuario a cocinar en vivo. El usuario reserva, paga y sigue su experiencia sin salir de casa.</p>
+  <p class="sub">Proyecto del grupo Mojarritas · Juan Riatiga, Nicole Salas y Juan Abello.</p>
+  <div class="cta-row"><a class="btn" href="app.html">Ver la app funcionando</a><a class="btn ghost" href="#como-funciona">Cómo funciona</a></div>
+  <div class="cur" role="group" aria-label="Moneda de los ejemplos"><span>Ver precios en:</span>
+    <button data-c="COP" class="on">Peso colombiano</button><button data-c="USD">Dólar</button><button data-c="EUR">Euro</button></div>
+  <div class="note">Conversión de referencia para ilustrar el prototipo. El precio final depende del chef, el menú y el día.</div>
+</div></header>
+
+<section class="sec dk" id="como-funciona"><div class="wrap">
+  <div class="eyebrow">Cómo funciona</div>
+  <h2>Cinco pasos, de la búsqueda al plato en tu mesa</h2>
+  <div class="demo">
+    <div class="tabs" role="tablist" aria-label="Pasos de la reserva">
+      <button role="tab" class="on" data-i="1"><b>1</b><span><strong>Buscar chef</strong><em>Elige fecha y comensales y mira los platos de cada chef.</em></span></button>
+      <button role="tab" data-i="2"><b>2</b><span><strong>Perfil del chef</strong><em>Fotos, certificación, reseñas y precio por persona.</em></span></button>
+      <button role="tab" data-i="3"><b>3</b><span><strong>Reservar</strong><em>Día, hora, comensales y la dirección donde llegará el chef.</em></span></button>
+      <button role="tab" data-i="4"><b>4</b><span><strong>Pago</strong><em>Resumen con el precio desglosado y el método de pago.</em></span></button>
+      <button role="tab" data-i="5"><b>5</b><span><strong>Confirmación</strong><em>Recibes el código de reserva y el aviso por correo.</em></span></button>
+    </div>
+    <figure class="browser"><div class="bar"><i></i><i></i><i></i><span id="urlbar">sabor-caribeno · inicio</span></div>
+      <img id="shot" src="assets/pasos/1.jpg" alt="Paso 1: buscar chef en la página" width="1280" height="760"></figure>
+  </div>
+</div></section>
+
+<section class="sec alt" id="problema"><div class="wrap">
+  <div class="eyebrow">1 · Problema</div>
+  <h2>Quieren conocer la cultura caribeña, pero sin salir de casa</h2>
+  <p class="lead">Muchas personas de entre 20 y 40 años quieren conocer la cultura caribeña a través de su gastronomía, pero prefieren no salir de casa por falta de tiempo o por comodidad. Viajar, ir a restaurantes o pedir domicilio implican desplazarse o se quedan en probar un plato sin vivir la cultura. Además, no cualquiera deja entrar a un chef desconocido a su casa, y el idioma, el precio y la poca disponibilidad de chefs dificultan la experiencia. Falta una forma de llevar una experiencia caribeña auténtica y segura directamente al hogar.</p>
+  <div class="cols3">
+    <div class="box"><h3>Necesidades</h3><ul>
+      <li>Conocer y disfrutar la cultura caribeña, especialmente su comida, desde un lugar cómodo.</li>
+      <li>Sentirse seguro al recibir a un chef en su propio espacio.</li></ul></div>
+    <div class="box"><h3>Dificultades</h3><ul>
+      <li>Viajar o ir a restaurantes exige salir de casa, justo lo que este público prefiere evitar.</li>
+      <li>Pedir comida a domicilio permite probar los platos, pero no ofrece una experiencia cultural completa.</li>
+      <li>Dejar entrar a un chef desconocido genera desconfianza si no hay verificación de identidad y certificación.</li>
+      <li>El idioma, el precio y la disponibilidad de chefs en cada ciudad pueden hacer difícil conseguir la experiencia.</li>
+      <li>Algunos ingredientes caribeños son escasos o costosos fuera del Caribe, lo que encarece el servicio.</li></ul></div>
+    <div class="box"><h3>Expectativas</h3><ul>
+      <li>Contar con chefs caribeños verificados y con certificación culinaria.</li>
+      <li>Reservar y pagar de forma sencilla, con el precio claro desde el inicio.</li>
+      <li>Comunicarse sin barreras de idioma y coordinar un horario que se ajuste a su tiempo.</li>
+      <li>Vivir una experiencia cultural auténtica, no solo recibir comida.</li></ul></div>
+  </div>
+</div></section>
+
+<section class="sec dk" id="alternativas"><div class="wrap">
+  <h2>No es delivery. Tampoco es salir a cenar.</h2>
+  <p class="lead" style="margin-bottom:26px">Alternativas actuales y por qué no resuelven este problema:</p>
+  <div class="tblwrap"><table class="tbl">
+    <thead><tr><th>Plataforma</th><th>Fortaleza</th><th>Limitación frente a este público</th></tr></thead>
+    <tbody>
+      <tr><td><b>Eatwithme</b></td><td>Experiencias gastronómicas en hogares privados, con enfoque en el intercambio cultural.</td><td>No se enfoca en cultura caribeña ni en chefs caribeños verificados que lleguen al hogar del usuario.</td></tr>
+      <tr><td><b>Timeleft</b></td><td>Organiza cenas entre desconocidos sin que el usuario planee nada.</td><td>Prioriza la conexión social sobre la experiencia cultural o gastronómica en casa.</td></tr>
+      <tr><td><b>Meetup</b></td><td>Gran variedad de grupos y actividades, incluidas cultura y gastronomía.</td><td>Las actividades son presenciales y obligan a desplazarse.</td></tr>
+      <tr class="us"><td><b>Sabor Caribeño</b></td><td colspan="2">Reúne en un mismo servicio chefs caribeños verificados, seguridad, comunicación clara, disponibilidad y una experiencia cultural auténtica desde casa.</td></tr>
+    </tbody></table></div>
+</div></section>
+
+<section class="sec alt" id="insight"><div class="wrap two">
+  <div><div class="eyebrow">2 · Insight</div><h2 style="margin:0">Un “error” repetido es una demanda oculta</h2></div>
+  <div><div class="big" style="font-size:clamp(56px,8vw,96px)">2 de 5</div>
+    <p>personas entendieron la app como un servicio de entrega de comida (tipo Rappi), no como un chef que cocina en vivo en casa.</p>
+    <p>Un “error de interpretación” repetido no es ruido: es una demanda oculta que el equipo no había planeado cubrir.</p>
+    <p>Esto obliga a comunicar desde el primer vistazo que el chef llega a cocinar al hogar, y abre la puerta a explorar la comida caribeña a domicilio como una línea de servicio adicional en futuras versiones.</p></div>
+</div></section>
+
+<section class="sec dk" id="solucion"><div class="wrap">
+  <div class="eyebrow">3 · Concepto de solución</div>
+  <h2>Se vende una experiencia cultural segura en casa, no solo comida</h2>
+  <p class="lead" style="margin-bottom:26px">Una aplicación web que conecta a personas interesadas en la cultura caribeña con chefs caribeños verificados, y facilita la reserva, el pago y el seguimiento del servicio.</p>
+  <div class="tblwrap"><table class="tbl">
+    <thead><tr><th>Característica</th><th>Atributo</th></tr></thead>
+    <tbody>
+      <tr><td><b>Confianza y seguridad</b></td><td>Chefs con identidad y certificación culinaria verificadas, y perfil del comprador visible solo tras aceptar el pedido.</td></tr>
+      <tr><td><b>Autenticidad</b></td><td>Chefs caribeños con perfil, publicaciones, años de experiencia y reseñas.</td></tr>
+      <tr><td><b>Sencillez</b></td><td>Reserva y pago en pocos pasos, con desglose claro del precio.</td></tr>
+      <tr><td><b>Accesibilidad</b></td><td>Precios en USD, EUR y COP, y filtros por plato, ciudad y rango de precio.</td></tr>
+      <tr><td><b>Comunicación</b></td><td>Contacto directo con el chef por WhatsApp y avisos de cada fase del pedido.</td></tr>
+    </tbody></table></div>
+</div></section>
+
+<section class="sec alt" id="mvp"><div class="wrap">
+  <div class="eyebrow">4 · MVP</div>
+  <h2>Se valida primero con datos simulados y un registro real en hoja de cálculo</h2>
+  <p class="lead" style="margin-bottom:26px">Sin construir la plataforma completa.</p>
+  <div class="tblwrap"><table class="tbl">
+    <thead><tr><th>Componente</th><th>Cómo funciona</th></tr></thead>
+    <tbody>
+      <tr><td><b>Catálogo de chefs</b></td><td>Lista filtrable por búsqueda de plato y rango de precio, con perfiles simulados.</td></tr>
+      <tr><td><b>Perfil del chef</b></td><td>Insignias de confianza, especialidad, certificación, publicaciones, reseñas y WhatsApp.</td></tr>
+      <tr><td><b>Reserva</b></td><td>Fecha, hora, comensales y dirección, validando la agenda y el horario del chef.</td></tr>
+      <tr><td><b>Pago</b></td><td>Resumen con menú, ingredientes y transporte, y tarifa de servicio; el cobro es una simulación.</td></tr>
+      <tr><td><b>Panel del chef</b></td><td>Aceptar, denegar y completar pedidos, bloquear días en la agenda y publicar su trabajo.</td></tr>
+      <tr><td><b>Seguimiento</b></td><td>Cuatro fases: reserva confirmada, chef aceptó, chef en camino, chef llegó.</td></tr>
+      <tr><td><b>Base de datos</b></td><td>Cuentas y reservas llegan a una hoja de cálculo de Google.</td></tr>
+      <tr><td><b>Ayuda</b></td><td>Mini tutorial según el rol (comprador o chef).</td></tr>
+    </tbody></table></div>
+  <div class="cols3" style="margin-top:34px">
+    <div class="box"><h3>Hipótesis a validar</h3><ul>
+      <li>Las personas están dispuestas a pagar por recibir a un chef caribeño en casa si hay verificación y seguridad.</li>
+      <li>Hay suficientes chefs caribeños dispuestos a registrarse y atender en varias ciudades.</li>
+      <li>La propuesta se entiende como un chef que cocina en vivo y no como un servicio de entrega de comida.</li></ul></div>
+    <div class="box"><h3>Métricas de éxito</h3><ul>
+      <li>Proporción de usuarios que entiende correctamente la propuesta de valor.</li>
+      <li>Reservas completadas frente a reservas iniciadas.</li>
+      <li>Pedidos aceptados por los chefs.</li>
+      <li>Calificación promedio de las reseñas y usuarios que repiten.</li></ul></div>
+    <div class="box risk"><h3>Riesgo principal</h3><p>La oferta de chefs por ciudad y el costo de los ingredientes caribeños fuera del Caribe pueden limitar la disponibilidad y encarecer la experiencia. En el piloto se medirá qué ciudades tienen oferta suficiente y cómo afecta el precio a la conversión.</p></div>
+  </div>
+</div></section>
+
+<section class="sec dk" id="confianza"><div class="wrap">
+  <div class="eyebrow">Confianza</div>
+  <h2>Un desconocido entra a tu casa. Por eso la confianza va primero.</h2>
+  <div class="trust">
+    <ul class="tl">
+      <li><i style="background:var(--flame)">1</i><div><b>Identidad verificada</b><span>Revisamos el documento de identidad de cada chef antes de aprobar su perfil.</span></div></li>
+      <li><i style="background:var(--leaf)">2</i><div><b>Certificación culinaria</b><span>Cada perfil muestra la institución certificadora, su número y el certificado en PDF.</span></div></li>
+      <li><i style="background:#1c6b34">3</i><div><b>Entrada segura</b><span>Los chefs entran con contraseña y un código que llega a su correo; las contraseñas se guardan cifradas.</span></div></li>
+      <li><i style="background:var(--marigold);color:#14261a">4</i><div><b>Reseñas y soporte</b><span>Lee las opiniones de quienes ya recibieron al chef y reporta cualquier problema directo a soporte por WhatsApp.</span></div></li>
+    </ul>
+    <div><div class="big">10</div><div class="bigcap">chefs de ejemplo en Santa Marta, de Taganga a El Rodadero, con perfil, platos y reseñas dentro de este prototipo.</div>
+    <div class="note">Datos de demostración del MVP; no son resultados de usuarios reales.</div></div>
+  </div>
+</div></section>
+
+<section class="sec alt" id="platos"><div class="wrap">
+  <div class="eyebrow">Qué se cocina</div>
+  <h2>Sabores de la costa, preparados frente a ti</h2>
+  <div class="gal">
+    <div style="background-image:url(assets/platos/arroz-coco-1.jpg)"><span>Arroz de coco</span></div>
+    <div style="background-image:url(assets/platos/pescado-1.jpg)"><span>Pescado frito con patacón</span></div>
+    <div style="background-image:url(assets/platos/mariscos-1.jpg)"><span>Mariscos costeños</span></div>
+    <div style="background-image:url(assets/platos/mote-1.jpg)"><span>Mote de queso</span></div>
+    <div style="background-image:url(assets/platos/posta-negra-1.jpg)"><span>Posta negra</span></div>
+    <div style="background-image:url(assets/platos/arepa-1.jpg)"><span>Arepa de huevo</span></div>
+    <div style="background-image:url(assets/platos/butifarra-1.jpg)"><span>Butifarra</span></div>
+    <div style="background-image:url(assets/platos/dulce-coco-1.jpg)"><span>Dulce de coco</span></div>
+  </div>
+</div></section>
+
+<section class="sec dk" id="precio"><div class="wrap two">
+  <div><div class="eyebrow">Precio transparente</div>
+    <h2>Sabes cuánto pagas antes de reservar</h2>
+    <p>El precio de cada chef es por persona. Al reservar ves el desglose completo: menú, ingredientes y transporte del chef, y la tarifa de servicio de la plataforma.</p>
+    <div class="chips"><span>Primera reserva: 10 % de descuento</span><span>Lunes a miércoles: 15 %</span><span>Código SABOR20: 20 % en tu primera reserva</span><span>Código NEQUI5: 5 % pagando con Nequi</span></div>
+    <div class="note">Se aplica la mejor oferta disponible, no se suman.</div></div>
+  <div class="price"><h3>Ejemplo: Mote de queso y Buñuelos</h3><p class="muted">2 comensales · chef con precio de US$36 por persona</p>
+    <div class="l"><span>Menú (2 × <span class="pr" data-usd="36"></span>)</span><b class="pr" data-usd="72"></b></div>
+    <div class="l"><span>Ingredientes y transporte (15,8 %)</span><b class="pr" data-usd="11.38"></b></div>
+    <div class="l"><span>Tarifa de servicio (8,55 %)</span><b class="pr" data-usd="6.16"></b></div>
+    <div class="l d"><span>Descuento (si aplica)</span><b>según tu oferta</b></div>
+    <div class="l t"><span>Total sin descuento</span><b class="pr" data-usd="89.54"></b></div></div>
+</div></section>
+
+<section class="sec alt"><div class="wrap">
+  <h2>Hecho para quien prefiere descubrir el Caribe desde casa</h2>
+  <div class="three">
+    <div><h3>Visitantes de Santa Marta</h3><p>Si estás de paso, prueba la comida costeña de verdad sin recorrer la ciudad buscando dónde.</p></div>
+    <div><h3>Curiosos de la cultura caribeña</h3><p>No necesitas ningún vínculo previo con el Caribe. La curiosidad basta para descubrir sabores y formas de vivir distintas.</p></div>
+    <div><h3>Amantes de su espacio</h3><p>Un ambiente tranquilo y controlado, sin desplazamientos ni salidas. Tú pones el lugar y la compañía; el chef cocina para ti.</p></div>
+  </div>
+</div></section>
+
+<section class="sec dk" id="preguntas"><div class="wrap">
+  <h2>Preguntas frecuentes</h2>
+  <div class="faq">
+    <details><summary>¿Cuánto cuesta?</summary><p>Cada chef fija su precio por persona. Al total se suman los ingredientes y el transporte (15,8 %) y la tarifa de servicio (8,55 %), y se resta el descuento que te corresponda.</p></details>
+    <details><summary>¿Quién compra los ingredientes?</summary><p>El chef. Por eso el desglose incluye ingredientes y transporte: no tienes que comprar nada.</p></details>
+    <details><summary>¿Cuándo se cobra?</summary><p>El pago se hace en la app al confirmar la reserva. En esta versión del prototipo el pago es simulado y no se guardan datos de tarjetas.</p></details>
+    <details><summary>¿Cómo coordino el horario con el chef?</summary><p>Eliges día y hora entre los que el chef tiene disponibles y escribes la dirección. El chef acepta o rechaza la reserva y te llega la respuesta por correo.</p></details>
+    <details><summary>¿En qué ciudades funciona?</summary><p>Por ahora solo en Santa Marta, Magdalena: la aplicación está pensada para esa ciudad.</p></details>
+    <details><summary>¿Y si tengo alergias?</summary><p>Al reservar puedes indicar alergias y notas para el chef; las ve antes de aceptar.</p></details>
+    <details><summary>¿Cómo sé que el chef es de confianza?</summary><p>Revisamos su identidad y su certificación culinaria antes de que aparezca en la app, y puedes leer reseñas de otros comensales.</p></details>
+  </div>
+</div></section>
+
+<section class="sec alt" id="estructura"><div class="wrap two">
+  <div><div class="eyebrow">5 · Estructura del proyecto</div><h2 style="margin-bottom:18px">Cómo está organizado el código</h2>
+<pre class="tree">├── index.html        esta página del proyecto (portada)
+├── app.html          la app (estructura de la página)
+├── css/
+│   ├── styles.css    estilos de la app
+│   └── proyecto.css  estilos de esta página
+├── js/
+│   ├── 1-base.js     utilidades, estado, monedas y reservas
+│   ├── 2-datos.js    chefs, platos, ofertas y ubicación
+│   ├── 3-ui.js       cabecera, ventanas y buscador
+│   ├── 4-inicio.js   inicio
+│   ├── 5-resultados.js  lista de chefs y mapa
+│   ├── 6-perfil.js   perfil del chef y reserva
+│   ├── 7-pago.js     pago y confirmación
+│   ├── 8-cuentas.js  registro e inicio de sesión
+│   ├── 9-chef.js     panel del chef
+│   ├── ampliar.js    zoom de fotos
+│   ├── ayuda.js      mini tutorial
+│   ├── sheets.js     conexión con Google Sheets
+│   └── arranque.js   restauración de sesión (se carga al final)
+├── apps-script/Codigo.gs  script de Google Apps Script
+├── assets/           logos y fotos de platos
+└── README.md</pre>
+  <p class="note">El orden de los archivos .js importa: <b>arranque.js</b> debe cargarse al final.</p></div>
+  <div><div class="eyebrow">6 · Tecnologías</div><h2 style="margin-bottom:18px">Qué usamos</h2>
+    <ul class="tl">
+      <li><i style="background:var(--flame)">H</i><div><b>HTML</b><span>Estructura de las páginas.</span></div></li>
+      <li><i style="background:var(--leaf)">C</i><div><b>CSS</b><span>Colores, tipografías y diseño adaptable a celular.</span></div></li>
+      <li><i style="background:#1c6b34">J</i><div><b>JavaScript</b><span>Catálogo, reservas, seguimiento y envío de datos, sin frameworks.</span></div></li>
+      <li><i style="background:var(--marigold);color:#14261a">G</i><div><b>Google Sheets y Apps Script</b><span>Base de datos de cuentas y reservas, y envío de correos.</span></div></li>
+      <li><i style="background:var(--coral);color:#14261a">S</i><div><b>Almacenamiento del navegador</b><span>Datos de la sesión durante el MVP.</span></div></li>
+      <li><i style="background:var(--jungle);border:1px solid var(--petal)">⌥</i><div><b>GitHub</b><span>Publicación de la app.</span></div></li>
+    </ul></div>
+</div></section>
+
+<section class="sec dk"><div class="wrap">
+  <div class="eyebrow">El equipo</div>
+  <h2>Un proyecto del grupo Mojarritas</h2>
+  <div class="team">
+    <div><b>Juan Riatiga</b><span>Integrante</span></div>
+    <div><b>Nicole Salas</b><span>Integrante</span></div>
+    <div><b>Juan Abello</b><span>Integrante</span></div>
+  </div>
+  <p class="lead" style="margin-top:24px">Universidad Sergio Arboleda · Profesor Oscar Fernando Solano Figueroa.</p>
+</div></section>
+
+<section class="end"><div class="wrap">
+  <h2>Que el Caribe llegue a tu mesa</h2>
+  <p>Busca un chef, elige el menú y recíbelo en casa. Todo desde la app.</p>
+  <a class="btn" href="app.html">Probar la app</a>
+</div></section>
+<footer><div class="wrap"><span>Sabor Caribeño · Santa Marta, Colombia</span><span>Prototipo universitario (MVP)</span></div></footer>
+
+<script>
+(function(){
+  var names={1:'inicio',2:'perfil del chef',3:'reservar',4:'pago',5:'reserva confirmada'}, alts={1:'Paso 1: buscar chef en la página',2:'Paso 2: perfil del chef',3:'Paso 3: reservar fecha, hora y dirección',4:'Paso 4: pago',5:'Paso 5: reserva confirmada'};
+  var tabs=document.querySelectorAll('.demo .tabs button'), img=document.getElementById('shot'), url=document.getElementById('urlbar'), cur=1, timer=null;
+  function show(i){cur=i;tabs.forEach(function(t){t.classList.toggle('on',+t.dataset.i===i);});img.src='assets/pasos/'+i+'.jpg';img.alt=alts[i];url.textContent='sabor-caribeno · '+names[i];}
+  tabs.forEach(function(t){t.addEventListener('click',function(){clearInterval(timer);show(+t.dataset.i);});});
+  var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){if(es[0].isIntersecting&&!timer){timer=setInterval(function(){show(cur%5+1);},4500);}},{threshold:.5}):null;
+  if(io) io.observe(document.querySelector('.demo'));
+})();
+(function(){
+  var RATES={USD:1,EUR:0.92,COP:4000}, cur='COP';
+  function fmt(usd){
+    var v=usd*RATES[cur];
+    if(cur==='COP') return '$'+Math.round(v/100)*100+'';
+    return new Intl.NumberFormat('es-CO',{style:'currency',currency:cur,maximumFractionDigits:2}).format(v);
+  }
+  function fmtCOP(n){return '$'+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' COP';}
+  function draw(){
+    document.querySelectorAll('.pr').forEach(function(el){
+      var u=parseFloat(el.getAttribute('data-usd')); if(isNaN(u)) return;
+      var t = cur==='COP' ? fmtCOP(Math.round(u*4000/100)*100) : fmt(u);
+      if(el.closest('.phone')) t=t.replace(' COP','');
+      el.textContent=t;
+    });
+    document.querySelectorAll('.cur button').forEach(function(b){b.classList.toggle('on',b.dataset.c===cur);});
+  }
+  document.querySelectorAll('.cur button').forEach(function(b){b.addEventListener('click',function(){cur=b.dataset.c;draw();});});
+  draw();
+})();
+</script>
+</body>
+</html>
