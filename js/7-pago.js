@@ -30,7 +30,7 @@ const METODOS=[
   ['paypal','PayPal','Con tu cuenta de PayPal','PP','#456D1B'],
   ['transfer','Transferencia bancaria','Bancolombia / Davivienda','$','#F39C12']
 ];
-let _pay={cur:'USD',metodo:'tarjeta',code:''};
+let _pay={cur:getCur(),metodo:'tarjeta',code:''};
 
 function renderPago(){
   const b=sess.get('booking',null);
@@ -96,7 +96,7 @@ ACT.pagar=()=>{
     fecha:b.fecha,hora:b.hora,guests:b.guests,direccion:b.direccion,notas,moneda:_pay.cur,metodo:m,totalUSD:bd.total,total:Math.round(bd.total*RATES[_pay.cur]*100)/100,
     oferta:dsc.pct?dsc.label:'',descuentoUSD:bd.desc,codigo:dsc.code||'',estado:'pendiente',creada:new Date().toISOString()};
   Reservas.add(r);
-  enviarASheets({tipo:'reserva',id:r.id,chef:c.name,comprador:u.nombre,correo:u.email,telefono:r.buyerPhone,fecha:r.fecha,hora:r.hora,comensales:r.guests,direccion:r.direccion,alergias:notas,metodo:m,moneda:r.moneda,total:r.total,oferta:r.oferta,codigo:r.codigo,estado:r.estado});
+  enviarASheets({tipo:'reserva',id:r.id,chef:c.name,chefId:c.id,chefEmail:c.email||'',totalUSD:r.totalUSD,creada:r.creada,comprador:u.nombre,correo:u.email,telefono:r.buyerPhone,fecha:r.fecha,hora:r.hora,comensales:r.guests,direccion:r.direccion,alergias:notas,metodo:m,moneda:r.moneda,total:r.total,oferta:r.oferta,codigo:r.codigo,estado:r.estado});
   sess.del('booking'); _pay={cur:_pay.cur,metodo:'tarjeta',code:''};
   go('/confirmado/'+r.id);
 };

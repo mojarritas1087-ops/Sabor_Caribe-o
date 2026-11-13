@@ -17,7 +17,7 @@ function renderPerfil(p){
   const avail=chefAvailable(c,fecha,hora);
   $('#app').innerHTML=
    '<div class="wrap" style="padding-top:26px"><a href="javascript:history.back()" style="font-weight:700;text-decoration:none;color:var(--ink)">&larr; Volver</a>'+
-   '<div class="pf-hd" style="margin-top:14px"><div class="av">'+avatar(c.foto,104,c.name)+'<b aria-label="Verificado">✓</b></div><div><h1>'+esc(c.name)+', chef caribeña en '+esc(city.name.split(',')[0])+'</h1><div class="muted">★ '+ratingTxt(c)+' · '+reviews.length+' reseñas · '+esc(c.zone)+', '+esc(city.name.split(',')[0])+' · '+esc(c.dishes.join(', '))+'</div></div></div>'+
+   '<div class="pf-hd" style="margin-top:14px"><div class="av">'+avatar(c.foto,104,c.name)+'<b aria-label="Verificado">✓</b></div><div><h1>'+esc(c.name)+', chef caribeña en '+esc(city.name.split(',')[0])+'</h1><div class="muted">★ '+ratingTxt(c)+' · '+reviews.length+' reseñas · '+(c.origen?'Originario de '+esc(c.origen)+' · ':'')+esc(c.zone)+', '+esc(city.name.split(',')[0])+' · '+esc(c.dishes.join(', '))+'</div></div></div>'+
    '<div class="gal">'+[0,1,2,3,4].map(tile).join('')+'</div>'+
    '<div class="cols"><div class="l">'+
      '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px"><span class="badge">✓ Identidad verificada</span><span class="badge'+(c.verified===false?' warn':'')+'">'+(c.verified===false?'Certificación en revisión':'✓ Certificación culinaria')+'</span><span class="badge">✓ Pago seguro</span></div>'+

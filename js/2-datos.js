@@ -4,23 +4,15 @@
 /* ---- ciudades y zonas (coordenadas aproximadas: al comensal solo se le muestra la zona, nunca una dirección) ---- */
 const CITIES=[
   {id:'santa-marta',name:'Santa Marta, Magdalena',sub:'Chefs de la bahía y El Rodadero',color:'#456D1B',lat:11.2408,lon:-74.1990,
-   zones:[['El Rodadero',11.2042,-74.2285],['Centro histórico',11.2408,-74.2110],['Gaira',11.1960,-74.2150],['Taganga',11.2665,-74.1930],['Bello Horizonte',11.2310,-74.1850],['Pozos Colorados',11.1850,-74.2330],['Mamatoco',11.2480,-74.1930]]},
-  {id:'cartagena',name:'Cartagena, Bolívar',sub:'Chefs de la ciudad amurallada',color:'#E35B1F',lat:10.4236,lon:-75.5253,
-   zones:[['Centro amurallado',10.4236,-75.5513],['Getsemaní',10.4217,-75.5446],['Bocagrande',10.4010,-75.5560],['Manga',10.4150,-75.5390]]},
-  {id:'barranquilla',name:'Barranquilla, Atlántico',sub:'Chefs de la zona',color:'#F39C12',lat:10.9685,lon:-74.7813,
-   zones:[['Alto Prado',10.9950,-74.8040],['Riomar',11.0230,-74.8290],['Centro',10.9890,-74.7830]]},
-  {id:'bogota',name:'Bogotá, D.C.',sub:'Chefs de la ciudad',color:'#F47A72',lat:4.7110,lon:-74.0721,
-   zones:[['Chapinero',4.6486,-74.0628],['Usaquén',4.6950,-74.0300],['Teusaquillo',4.6430,-74.0870]]},
-  {id:'madrid',name:'Madrid, España',sub:'Chefs caribeños en Europa',color:'#0D3B1E',lat:40.4168,lon:-3.7038,
-   zones:[['Malasaña',40.4250,-3.7050],['Chamberí',40.4330,-3.7040],['Lavapiés',40.4090,-3.7010]]},
-  {id:'miami',name:'Miami, Estados Unidos',sub:'Chefs caribeños en Norteamérica',color:'#8fb55a',lat:25.7617,lon:-80.1918,
-   zones:[['Wynwood',25.8010,-80.1990],['Brickell',25.7600,-80.1930],['Coral Gables',25.7500,-80.2600]]}
+   zones:[['El Rodadero',11.2042,-74.2285],['Centro histórico',11.2408,-74.2110],['Gaira',11.1960,-74.2150],['Taganga',11.2665,-74.1930],['Bello Horizonte',11.2310,-74.1850],['Pozos Colorados',11.1850,-74.2330],['Mamatoco',11.2480,-74.1930],['El Prado',11.2330,-74.2020],['Pescaíto',11.2450,-74.2155],['Manzanares',11.2370,-74.1960],['Bavaria',11.2240,-74.1950],['Los Almendros',11.2290,-74.1900],['Irotama',11.1730,-74.2280],['Playa Salguero',11.1970,-74.2260],['Minca',11.1470,-74.1170]]}
 ];
-const cityById=id=>CITIES.find(c=>c.id===id);
+const cityById=id=>CITIES.find(c=>c.id===id)||CITIES[0];
+/* El servicio es solo en Santa Marta. Estas son las ciudades de la costa Caribe de Colombia de donde pueden venir los chefs. */
+const ORIGENES=['Santa Marta','Ciénaga','Barranquilla','Cartagena','Riohacha','Valledupar','Sincelejo','Montería','San Andrés'];
 const COUNTRIES=['Colombia','España','Estados Unidos','México','Panamá','Argentina','Chile','Perú','Otro'];
 
 /* ---- menú de hoy (cámbialo aquí cuando quieras) ---- */
-const TODAY={chefId:'s1',titulo:'Cena costeña de tres tiempos',entrada:'Mote de queso con bollo limpio',fuerte:'Arroz de coco con posta cartagenera y patacones',postre:'Dulce de coco con queso costeño',price:40,foto:'assets/platos/posta-2.jpg'};
+const TODAY={chefId:'s1',titulo:'Cena costeña de tres tiempos',entrada:'Mote de queso con bollo limpio',fuerte:'Arroz de coco con posta cartagenera y patacones',postre:'Dulce de coco con queso costeño',price:10,foto:'assets/platos/posta-2.jpg'};
 
 /* ---- ofertas automáticas y códigos de promoción ---- */
 const OFFERS=[
@@ -34,10 +26,13 @@ const PROMOS=[
 ];
 
 /* ---- chefs de ejemplo ---- */
+/* precios en USD por persona; los de ejemplo se ajustan para que ningún plato pase de 12 US$ (≈ $48.000 COP) */
+const _fit=p=>Math.min(12,Math.max(7,Math.round(p*0.25*2)/2));
 function _chef(id,name,city,zone,dishes,price,years,cert,bio,rating,extra){
+  price=_fit(price);
   const c=cityById(city), z=(c.zones.find(x=>x[0]===zone)||[zone,c.lat,c.lon]);
   const h=[...id].reduce((a,ch)=>a+ch.charCodeAt(0),0);
-  return Object.assign({id,name,city,zone,lat:z[1]+((h%7)-3)*0.0014,lon:z[2]+((h%5)-2)*0.0014,dishes,price,years,cert,
+  return Object.assign({id,name,city,zone,origen:'Santa Marta',lat:z[1]+((h%7)-3)*0.0014,lon:z[2]+((h%5)-2)*0.0014,dishes,price,years,cert,
     bio,hours:{from:'10:00',to:'21:00'},foto:null,fotos:[],wa:'573000000000',seed:true,verified:true,
     reviews:[{n:'Carla R.',s:5,t:'Sentí que estaba en la costa otra vez.'},{n:'Daniel P.',s:rating>=4.8?5:4,t:'Excelente sazón y muy puntual.'}],rating,fav:rating>=4.9},extra||{});
 }
@@ -52,17 +47,11 @@ const SEED_CHEFS=[
   _chef('s8','Ricardo Ospina','santa-marta','Centro histórico',['Mote de queso','Buñuelos'],36,7,'SENA Gastronomía #1904','Sopas, buñuelos y mucha conversación en la cocina.',4.9),
   _chef('s9','Daniela Castillo','santa-marta','El Rodadero',['Dulce de coco','Arepa de huevo'],34,5,'Instituto Culinario del Caribe #612','Repostería caribeña y desayunos costeños.',4.8),
   _chef('s10','Camila Herrera','santa-marta','Gaira',['Pescado frito','Tostones'],39,9,'Fundación Gastronómica Cartagena #144','Cocina de mar con técnica y alma costeña.',4.9),
-  _chef('c1','Marilú Rondón','cartagena','Getsemaní',['Arroz con coco','Posta cartagenera','Enyucado'],41,13,'Fundación Gastronómica Cartagena #031','Cocina cartagenera de Getsemaní, con recetas de mi madre.',4.9),
-  _chef('c2','Javier Delgado','cartagena','Bocagrande',['Cazuela de mariscos','Patacones'],46,12,'Escuela Costeña de Cocina #120','Cazuela de mariscos para compartir.',4.8),
-  _chef('c3','Paula Guerrero','cartagena','Manga',['Cayeye','Arepa de huevo'],33,6,'SENA Gastronomía #3011','Desayunos y cenas con sabor a Bolívar.',4.7),
-  _chef('b1','Esteban Salcedo','barranquilla','Alto Prado',['Sancocho de pescado','Butifarra'],37,8,'Instituto Culinario del Caribe #404','Carnaval hecho comida: sabor barranquillero.',4.8),
-  _chef('b2','Laura Pardo','barranquilla','Riomar',['Arroz de lisa','Queso costeño frito'],39,7,'SENA Gastronomía #2780','Arroz de lisa y cocina de la Arenosa.',4.7),
-  _chef('g1','Tomás Navarro','bogota','Chapinero',['Mote de queso','Posta negra'],43,10,'SENA Gastronomía #1470','Cocina costeña en el corazón de Bogotá.',4.8),
-  _chef('g2','Isabella Cabezas','bogota','Usaquén',['Arroz de coco','Patacones'],45,9,'Instituto Culinario del Caribe #330','Caribe para la gente de la montaña.',4.9),
-  _chef('m1','Valentina Solano','madrid','Malasaña',['Arroz de coco','Pescado frito','Dulce de coco'],42,11,'Escuela Costeña de Cocina #095','Caribeña viviendo en Madrid: te traigo la costa a casa.',4.8),
-  _chef('m2','Mateo Fernández','madrid','Chamberí',['Posta cartagenera','Buñuelos'],40,8,'SENA Gastronomía #1620','Sabores del Caribe colombiano en Madrid.',4.7),
-  _chef('u1','Juliana Rojas','miami','Wynwood',['Mariscos costeños','Patacones'],47,10,'Fundación Gastronómica Cartagena #207','Colombian Caribbean cooking in Miami (también en español).',4.9),
-  _chef('u2','Sebastián Herrera','miami','Brickell',['Arroz de coco','Pescado frito'],44,9,'Instituto Culinario del Caribe #280','Cena caribeña en tu casa de Miami.',4.8)
+  _chef('c1','Marilú Rondón','santa-marta','El Prado',['Arroz con coco','Posta cartagenera','Enyucado'],41,13,'Fundación Gastronómica Cartagena #031','Cocina cartagenera de Getsemaní, con recetas de mi madre.',4.9,{origen:'Cartagena'}),
+  _chef('c2','Javier Delgado','santa-marta','Irotama',['Cazuela de mariscos','Patacones'],46,12,'Escuela Costeña de Cocina #120','Cazuela de mariscos para compartir.',4.8,{origen:'Cartagena'}),
+  _chef('c3','Paula Guerrero','santa-marta','Manzanares',['Cayeye','Arepa de huevo'],33,6,'SENA Gastronomía #3011','Desayunos y cenas con sabor a Bolívar.',4.7,{origen:'Cartagena'}),
+  _chef('b1','Esteban Salcedo','santa-marta','Bavaria',['Sancocho de pescado','Butifarra'],37,8,'Instituto Culinario del Caribe #404','Carnaval hecho comida: sabor barranquillero.',4.8,{origen:'Barranquilla'}),
+  _chef('b2','Laura Pardo','santa-marta','Los Almendros',['Arroz de lisa','Queso costeño frito'],39,7,'SENA Gastronomía #2780','Arroz de lisa y cocina de la Arenosa.',4.7,{origen:'Barranquilla'}),
 ];
 
 /* ---- fotos de los platos (carpeta assets/platos) ---- */
@@ -122,7 +111,9 @@ const RESENAS_KEY='resenas';
 function allChefs(){
   const mine=store.get('chefs',[]);
   const extra=store.get(RESENAS_KEY,[]);
-  return SEED_CHEFS.concat(mine).map(c=>{
+  return SEED_CHEFS.concat(mine).map(c0=>{
+    let c=c0;
+    if(c0.city!=='santa-marta'){const zz=CITIES[0].zones.find(z=>z[0]===c0.zone)||CITIES[0].zones[0];c=Object.assign({},c0,{origen:c0.origen||'Costa Caribe',city:'santa-marta',zone:zz[0],lat:zz[1],lon:zz[2]});}
     const rs=(c.reviews||[]).concat(extra.filter(r=>r.chefId===c.id));
     const ex=extra.filter(r=>r.chefId===c.id);
     let avg;

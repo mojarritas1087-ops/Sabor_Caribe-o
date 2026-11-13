@@ -34,22 +34,24 @@ const todayISO=()=>isoOf(new Date());
 function fmtShort(iso){if(!iso)return '';const d=parseISO(iso);return d.getDate()+' '+MESES[d.getMonth()];}
 function fmtLong(iso){if(!iso)return '';const d=parseISO(iso);return d.getDate()+' '+MESES[d.getMonth()]+' '+d.getFullYear();}
 function fmtHour(h){if(!h)return '';const [H,M]=h.split(':').map(Number);return ((H%12)||12)+':'+pad(M)+' '+(H<12?'AM':'PM');}
-const HOURS=['12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00'];
+const HOURS=Array.from({length:24},(_,i)=>pad(i)+':00'); /* todas las horas, AM y PM */
 const mins=h=>{const [H,M]=h.split(':').map(Number);return H*60+M;};
 
 /* ---- precios: los chefs cobran en USD por persona; se muestra en la moneda elegida ---- */
 const RATES={USD:1,EUR:0.92,COP:4000};
-const PRICE_LOW=35, PRICE_HIGH=45;
+const PRICE_LOW=10, PRICE_HIGH=11; /* USD por persona: 10 US$ = $40.000 COP; ningún plato pasa de 12 US$ = $48.000 COP */
+const CURS=['COP','USD','EUR'];
+function getCur(){const c=store.get('cur','COP');return CURS.indexOf(c)>=0?c:'COP';}
 function money(usd,cur){
-  cur=cur||'USD'; const v=usd*RATES[cur];
+  cur=cur||getCur(); const v=usd*RATES[cur];
   if(cur==='COP') return '$'+Math.round(v).toLocaleString('es-CO')+' COP';
   if(cur==='EUR') return v.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
   return 'US$'+(Number.isInteger(usd)?usd:usd.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2}));
 }
-/* menú + ingredientes y transporte (15,8 %) + tarifa de servicio (8,55 %) − descuento */
+/* menú + ingredientes y transporte (15,8 %) + tarifa de servicio (15 %, mínimo US$3 ≈ $12.000 COP) − descuento */
 function breakdown(price,guests,descPct){
   const r2=n=>Math.round(n*100)/100;
-  const menu=r2((+price||0)*(+guests||0)), ingr=r2(menu*0.158), svc=r2(menu*0.0855);
+  const menu=r2((+price||0)*(+guests||0)), ingr=r2(menu*0.158), svc=r2(Math.max(menu*0.15,3));
   const desc=r2(menu*((descPct||0)/100));
   return {menu,ingr,svc,desc,total:r2(menu+ingr+svc-desc)};
 }
@@ -118,7 +120,7 @@ const Reservas={
   setEstado(id,estado){
     const a=Reservas.all();const r=a.find(x=>String(x.id)===String(id));if(!r)return;
     r.estado=estado;Reservas.save(a);
-    enviarASheets({tipo:'estado',id:r.id,estado,correo:r.buyerEmail,chef:r.chefName||r.chef||'',fecha:r.fecha,hora:r.hora});
+    enviarASheets({tipo:'estado',id:r.id,estado,correo:r.buyerEmail,chefEmail:r.chefEmail||'',comprador:r.buyerName||'',chef:r.chefName||r.chef||'',fecha:r.fecha,hora:r.hora});
   }
 };
 

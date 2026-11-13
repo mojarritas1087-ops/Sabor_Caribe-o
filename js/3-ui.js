@@ -14,6 +14,7 @@ function renderHeader(){
   else right=(chef?'<a href="#/mi-perfil">Mi perfil de chef</a>':'')+'<a href="#/reservas">Mis reservas</a>';
   const photo=u?(chef&&chefByEmail(u.email)?chefByEmail(u.email).foto:u.foto):null;
   const menu='<div style="position:relative"><button class="userbtn" data-act="menu" aria-haspopup="true" aria-expanded="false" aria-label="Menú de la cuenta">'+avatar(photo,30,u?u.nombre:'Sin sesión')+'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14261a" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>';
+  const cur=getCur(), pick='<label class="curpick"><span class="sr">Moneda</span><select data-cursel aria-label="Moneda para ver los precios">'+[['COP','COP · Peso'],['USD','USD · Dólar'],['EUR','EUR · Euro']].map(o=>'<option value="'+o[0]+'"'+(cur===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+'</select></label>';
   $('#top').innerHTML='<a class="logo" href="#/"><img src="assets/logo-icono.svg" alt="" width="46" height="46"><span>Sabor Caribeño</span></a><nav class="nav" aria-label="Principal">'+right+menu+'</nav>';
 }
 const MI=(d)=>'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>';
@@ -105,7 +106,7 @@ function fillPop(){
   const p=$('#popslot .pop'); if(!p) return; const s=Search.get();
   if(_pop==='donde'){
     let h='<h4>Destinos sugeridos</h4><button class="dest" data-act="near"><i style="background:#456D1B22;color:#456D1B"><s></s></i><span><b>Cerca de ti</b><small>Usar mi ubicación actual</small></span></button>';
-    CITIES.forEach(c=>{h+='<button class="dest" data-act="pickcity" data-id="'+c.id+'"><i style="background:'+c.color+'22;color:'+c.color+'"><s></s></i><span><b>'+esc(c.name)+'</b><small>'+esc(c.sub)+'</small></span></button>';});
+    CITIES.filter(c=>allChefs().some(x=>x.city===c.id)).forEach(c=>{h+='<button class="dest" data-act="pickcity" data-id="'+c.id+'"><i style="background:'+c.color+'22;color:'+c.color+'"><s></s></i><span><b>'+esc(c.name)+'</b><small>'+esc(c.sub)+'</small></span></button>';});
     p.innerHTML=h;
   }else if(_pop==='fecha'){
     const now=new Date(), months=[0,1].map(k=>new Date(now.getFullYear(),now.getMonth()+_calMonth+k,1));
@@ -138,7 +139,7 @@ ACT.near=()=>{
   Geo.setOn(true); toast('Buscando tu ubicación…');
   const un=Geo.subscribe(()=>{
     if(Geo.pos){
-      let best=null,bd=1e9; CITIES.forEach(c=>{const d=haversine(Geo.pos,{lat:c.lat,lon:c.lon});if(d<bd){bd=d;best=c;}});
+      let best=null,bd=1e9; CITIES.filter(c=>allChefs().some(x=>x.city===c.id)).forEach(c=>{const d=haversine(Geo.pos,{lat:c.lat,lon:c.lon});if(d<bd){bd=d;best=c;}});
       if(best&&bd<60){Search.set({city:best.id});toast('Estás cerca de '+best.name.split(',')[0]+'.');}
       else{Search.set({city:'santa-marta'});toast('Aún no hay chefs cerca de ti; te mostramos Santa Marta.');}
       un(); updateBar(); if(_pop==='donde') openPopFor('fecha');
@@ -178,3 +179,6 @@ function requireLogin(returnTo,rol){
   toast(u?'Esta sección es para cuentas de '+(rol==='chef'?'chef':'comprador')+'.':'Inicia sesión para continuar.');
   go('/login'); return false;
 }
+
+/* moneda elegida: cambia todos los precios de la página */
+document.addEventListener('change',e=>{const t=e.target;if(t&&t.matches&&t.matches('[data-cursel]')){store.set('cur',t.value);_pay.cur=t.value;render();}});

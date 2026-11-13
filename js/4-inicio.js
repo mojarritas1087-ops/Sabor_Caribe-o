@@ -40,10 +40,10 @@ function renderInicio(){
   const dishMap={}; here.forEach(c=>c.dishes.forEach(d=>{const e=etaKey(c,ref);if(!dishMap[d]||e<dishMap[d].e)dishMap[d]={c,e,m:etaMin(c,ref)};}));
   const dishes=Object.keys(dishMap).sort((a,b)=>dishMap[a].e-dishMap[b].e).slice(0,12);
   const geoTxt=Geo.pos?'Usamos tu ubicación para calcular cuánto tardaría cada chef en llegar':(Geo.enabled()?'Buscando tu ubicación…':'Activa tu ubicación para calcular cuánto tardaría cada chef en llegar');
-  const chips=[['rating','Mejor calificados'],['eta','Más cercanos a ti'],['low','Hasta US$35'],['mariscos','Mariscos'],['grupos','Para grupos'],['dulce','Postres']];
+  const chips=[['COP','Peso colombiano · COP'],['USD','Dólar · USD'],['EUR','Euro · EUR']], curNow=getCur();
   $('#app').innerHTML=
    '<section class="hero"><img class="herologo" src="assets/logo-icono.svg" alt="Sabor Caribeño" width="92" height="92"><h1>Vive el Caribe en tu propia casa</h1><p>Un chef caribeño verificado cocina en vivo para ti. No es un domicilio: es una experiencia.</p>'+searchBar(false)+
-   '<div class="geonote" style="margin-top:22px;gap:12px">'+chips.map(c=>'<button class="chip" data-act="quick" data-q="'+c[0]+'">'+c[1]+'</button>').join('')+'</div>'+
+   '<div class="geonote" style="margin-top:22px;gap:12px" role="group" aria-label="Moneda para ver los precios"><span style="font-weight:700">Ver precios en:</span>'+chips.map(c=>'<button class="chip'+(curNow===c[0]?' on':'')+'" data-act="setcur" data-cur="'+c[0]+'" aria-pressed="'+(curNow===c[0])+'">'+c[1]+'</button>').join('')+'</div>'+
    '<div class="geonote">'+ICON_PIN+'<span id="geotxt">'+geoTxt+'</span> · <button class="linkbtn" data-act="geotoggle" id="geobtn">'+(Geo.enabled()?'Desactivar':'Activar')+'</button></div></section>'+
    '<section class="today" aria-label="Menú de hoy y ofertas"><div class="hd"><div><div class="kicker">'+todayLine()+'</div><h2>Menú de hoy y ofertas</h2></div>'+
    '<div class="tabs" id="ttabs" role="tablist"><button data-act="tab" data-tab="menu" class="on" role="tab">Menú de hoy</button><button data-act="tab" data-tab="ofertas" role="tab">Ofertas</button><button data-act="tab" data-tab="promos" role="tab">Promociones</button></div></div><div class="tbody" id="tbody"></div></section>'+
@@ -69,6 +69,7 @@ ACT.copycode=el=>{
 };
 ACT.reservarmenu=()=>{const c=chefById(TODAY.chefId);Search.set({city:c.city,guests:Search.get().guests||2});go('/chef/'+c.id);};
 ACT.geotoggle=()=>{Geo.setOn(!Geo.enabled());if(!Geo.enabled())renderInicioKeep();else toast('Buscando tu ubicación…');};
+ACT.setcur=el=>{store.set('cur',el.dataset.cur);_pay.cur=el.dataset.cur;render();};
 ACT.quick=el=>{
   const q=el.dataset.q, f=Object.assign({},Search.get().filters), patch={};
   if(!Search.get().city) patch.city='santa-marta';
