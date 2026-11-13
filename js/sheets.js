@@ -31,3 +31,13 @@ async function enviarCodigoCorreo(correo,codigo){
     return {ok:true,unsure:true};
   }
 }
+
+/* Trae de la hoja las reservas de un chef (por su correo) para verlas en cualquier dispositivo. Devuelve [] si no se puede. */
+async function traerReservasChef(correo){
+  if(!SHEETS_ACTIVO()||!correo) return null;
+  try{
+    const r=await fetch(SHEETS_URL+'?tipo=chef&correo='+encodeURIComponent(correo),{redirect:'follow'});
+    const j=await r.json();
+    return Array.isArray(j)?j:null;
+  }catch(e){ return null; }
+}

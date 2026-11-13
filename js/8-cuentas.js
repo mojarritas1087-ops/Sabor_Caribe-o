@@ -158,12 +158,11 @@ function renderChefDatos(){
    '<label class="up" id="up-doc"><input type="file" data-file="doc" accept="image/*,application/pdf"><b>Foto del documento</b><small>Solo se usa para verificarte</small></label>'+
    '<div class="row"><label class="field"><span>Institución certificadora</span><input id="d-ci" maxlength="60" placeholder="SENA, instituto…"></label><label class="field"><span>N.º de certificado</span><input id="d-cn" maxlength="20"></label></div>'+
    '<label class="up" id="up-cert"><input type="file" data-file="cert" accept="application/pdf,image/*"><b>Certificado en PDF</b><small>PDF o imagen</small></label>'+
-   '<div class="sect">Tu cocina</div><div class="row"><label class="field"><span>Años de experiencia</span><input id="d-y" type="number" min="0" max="60"></label><label class="field"><span>Precio por persona (USD)</span><input id="d-p" type="number" min="20" max="120"></label></div>'+
+   '<div class="sect">Tu cocina</div><div class="row"><label class="field"><span>Años de experiencia</span><input id="d-y" type="number" min="0" max="60"></label><label class="field"><span>Precio por persona (USD)</span><input id="d-p" type="number" min="5" max="12" step="0.5"></label></div>'+
    '<label class="field"><span>Platos que cocinas (separados por coma)</span><input id="d-pl" placeholder="Arroz de coco, Posta cartagenera"></label>'+
-   '<div class="row"><label class="field"><span>Ciudad</span><select id="d-ci2" data-act="ciudadsel">'+CITIES.map(c=>'<option value="'+c.id+'">'+esc(c.name)+'</option>').join('')+'</select></label><label class="field"><span>Zona o barrio</span><select id="d-z">'+c0.zones.map(z=>'<option>'+esc(z[0])+'</option>').join('')+'</select></label></div>'+
-   '<div class="row"><label class="field"><span>Atiendes desde</span><select id="d-h1">'+HOURS.map(h=>'<option value="'+h+'">'+fmtHour(h)+'</option>').join('')+'</select></label><label class="field"><span>Hasta</span><select id="d-h2">'+HOURS.map(h=>'<option value="'+h+'"'+(h==='21:00'?' selected':'')+'>'+fmtHour(h)+'</option>').join('')+'</select></label></div>'+
+   '<div class="row"><label class="field"><span>Ciudad de origen (costa Caribe)</span><select id="d-or">'+ORIGENES.map(o=>'<option>'+esc(o)+'</option>').join('')+'</select></label><label class="field"><span>Zona de Santa Marta donde atiendes</span><select id="d-z">'+c0.zones.map(z=>'<option>'+esc(z[0])+'</option>').join('')+'</select></label></div>'+
+   '<div class="row"><label class="field"><span>Atiendes desde</span><select id="d-h1">'+HOURS.map(h=>'<option value="'+h+'"'+(h==='10:00'?' selected':'')+'>'+fmtHour(h)+'</option>').join('')+'</select></label><label class="field"><span>Hasta</span><select id="d-h2">'+HOURS.map(h=>'<option value="'+h+'"'+(h==='21:00'?' selected':'')+'>'+fmtHour(h)+'</option>').join('')+'</select></label></div>'+
    '<label class="check"><input type="checkbox" id="d-term"> Confirmo que mis datos son reales y acepto los términos para chefs.</label><div id="merr" class="err" role="alert"></div><button class="btn block" data-act="chefcrear">Crear perfil de chef</button>',{wide:true,back:true});
-  $('#d-ci2').addEventListener('change',()=>{const c=cityById($('#d-ci2').value);$('#d-z').innerHTML=c.zones.map(z=>'<option>'+esc(z[0])+'</option>').join('');});
 }
 const fotoPerfil=()=>'<div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">'+avatar(_cp.foto,72,'Tu foto de perfil')+'<label class="ghostbtn sm" style="cursor:pointer">'+(_cp.foto?'Cambiar foto de perfil':'Subir foto de perfil')+'<input type="file" accept="image/*" data-file="perfil" style="display:none"></label></div>';
 const platosHtml=()=>'<div class="hint" style="margin:0 0 6px">Fotos de tus platos (mínimo 3, máximo 8)</div>'+photoGrid(_cp.fotos,'plato',8);
@@ -192,19 +191,19 @@ ACT.chefcrear=()=>{
   if(!_cp.certName) return setE('Sube tu certificado.');
   const y=+g('d-y'), p=+g('d-p');
   if(!(y>=0&&g('d-y')!=='')||y>60) return setE('Escribe tus años de experiencia.');
-  if(!(p>=20&&p<=120)) return setE('El precio por persona debe estar entre US$20 y US$120.');
+  if(!(p>=5&&p<=12)) return setE('El precio por persona debe estar entre US$5 y US$12 (máximo $48.000 COP).');
   const platos=g('d-pl').split(',').map(s=>s.trim()).filter(Boolean).slice(0,6);
   if(!platos.length) return setE('Escribe al menos un plato.');
   const h1=$('#d-h1').value,h2=$('#d-h2').value; if(mins(h2)<=mins(h1)) return setE('La hora final debe ser después de la inicial.');
   if(!$('#d-term').checked) return setE('Acepta los términos para continuar.');
-  const city=cityById($('#d-ci2').value), zn=$('#d-z').value, z=city.zones.find(x=>x[0]===zn)||[zn,city.lat,city.lon];
+  const city=CITIES[0], zn=$('#d-z').value, z=city.zones.find(x=>x[0]===zn)||[zn,city.lat,city.lon];
   const user={email:_cd.email,nombre:_cd.nombre,pass:_cd.pass,telefono:_cd.telefono,rol:'chef',creado:new Date().toISOString()};
   const us=Users.all(); if(us.some(u=>u.email===user.email)) return setE('Ese correo ya tiene cuenta.'); us.push(user);
-  const chef={id:'u'+Date.now().toString(36),email:user.email,name:user.nombre,city:city.id,zone:zn,lat:z[1],lon:z[2],dishes:platos,price:p,years:y,cert:g('d-ci')+' #'+g('d-cn'),bio:g('d-bio'),
+  const chef={id:'u'+Date.now().toString(36),email:user.email,name:user.nombre,city:city.id,origen:$('#d-or').value,zone:zn,lat:z[1],lon:z[2],dishes:platos,price:p,years:y,cert:g('d-ci')+' #'+g('d-cn'),bio:g('d-bio'),
     hours:{from:h1,to:h2},foto:_cp.foto,fotos:_cp.fotos.slice(),wa:_cd.telefono.replace(/\D/g,''),verified:false,seed:false,reviews:[],docTipo:g('d-dt'),docNum:g('d-dn')};
   if(!saveChef(chef)) return setE('No hay espacio para guardar las fotos. Usa menos fotos o más pequeñas.');
   Users.save(us);
-  enviarASheets({tipo:'registro',rol:'chef',nombre:user.nombre,correo:user.email,telefono:user.telefono,ciudad:city.name,zona:zn,platos:platos.join(', '),precio:p,anos:y,certificacion:chef.cert,documento:chef.docTipo+' '+chef.docNum,horario:h1+'-'+h2});
+  enviarASheets({tipo:'registro',rol:'chef',nombre:user.nombre,correo:user.email,telefono:user.telefono,ciudad:'Santa Marta',origen:$('#d-or').value,zona:zn,platos:platos.join(', '),precio:p,anos:y,certificacion:chef.cert,documento:chef.docTipo+' '+chef.docNum,horario:h1+'-'+h2});
   Session.login(user.email); _cd=null; _cp={foto:null,fotos:[],docName:'',certName:'',docFoto:''};
   toast('¡Listo! Tu perfil de chef ya está creado.'); go('/mi-perfil');
 };
